@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="es" style="--brand-blue: #000000; --brand-cyan: #207ba2; --brand-emerald: #11b07b; --glass-blur: 30px;">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>idealogic | Sistemas &amp; Bases de Datos a tu Medida — Servicio Técnico Informático</title>
+  <meta name="description" content="idealogic — Tus ideas, fuente para una lógica eficiente. Creación y soporte de bases de datos personalizadas, soluciones informáticas, reparación y seguridad IT." />
+
+  <!-- Tipografías Futuristas y Técnicas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@600;700;800&amp;display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Filtros Ópticos SVG para Refracción Liquid Glass -->
+  <svg width="0" height="0" style="position:absolute; pointer-events:none;" aria-hidden="true">
+    <defs>
+      <filter id="liquid-refraction">
+        <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="2" result="noise"></feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="6" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+      </filter>
+      <linearGradient id="idealogic-blue-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#00c6ff"></stop>
+        <stop offset="50%" stop-color="#0d5bd9"></stop>
+        <stop offset="100%" stop-color="#062c80"></stop>
+      </linearGradient>
+      <linearGradient id="idealogic-emerald-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#00ffa3"></stop>
+        <stop offset="100%" stop-color="#00b87c"></stop>
+      </linearGradient>
+      <linearGradient id="idealogic-slate-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#94a3b8"></stop>
+        <stop offset="50%" stop-color="#526077"></stop>
+        <stop offset="100%" stop-color="#334155"></stop>
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <!-- Fondo Interactivo: Cáusticas Líquidas + Canvas de Circuitos Lógicos -->
+  <div class="ambient-caustics" aria-hidden="true">
+    <div class="caustic-orb orb-1"></div>
+    <div class="caustic-orb orb-2"></div>
+    <div class="caustic-orb orb-3"></div>
+  </div>
+  <canvas id="circuit-canvas"></canvas>
+
+  <!-- ========================================================================
+       NAVBAR FLOTANTE LIQUID GLASS
+       ======================================================================== -->
+  <header class="navbar-wrapper">
+    <nav class="navbar-capsule" aria-label="Navegación Principal">
+      <a href="#inicio" class="brand-logo-link">
+        <!-- Emblema Vectorial Oficial "iD" de idealogic (con llave técnica y circuitos) -->
+        <svg class="brand-id-emblem" viewBox="0 0 120 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Punto verde esmeralda de la "i" -->
+          <circle cx="24" cy="18" r="10.5" fill="url(#idealogic-emerald-grad)"></circle>
+          <!-- Columna azul de la "i" con base en L -->
+          <path d="M13 36L35 28V84H46L50 100H13V36Z" fill="url(#idealogic-blue-grad)"></path>
+          <!-- Arco de la "D" con circuitos integrados -->
+          <path d="M46 14H74C96 14 112 31 112 56C112 81 96 100 72 100H62L57 84H70C85 84 95 73 95 56C95 39 85 30 70 30H46V14Z" fill="url(#idealogic-slate-grad)"></path>
+          <!-- Llave inglesa técnica integrada en la D -->
+          <path d="M45 55C40 59 39 67 44 72L49 76L54 100H66L60 74L64 69C68 64 66 56 60 52L57 62L50 63L45 55Z" fill="#7c8da6"></path>
+          <!-- Trazas de circuito superior y media -->
+          <circle cx="65" cy="45" r="4.5" stroke="#94a3b8" stroke-width="3" fill="#020613"></circle>
+          <path d="M70 45H83L96 58H111" stroke="#94a3b8" stroke-width="3.5" stroke-linecap="round"></path>
+          <circle cx="68" cy="58" r="4.5" stroke="#94a3b8" stroke-width="3" fill="#020613"></circle>
+          <path d="M73 58H84L96 68H110" stroke="#94a3b8" stroke-width="3.5" stroke-linecap="round"></path>
+          <!-- Traza de circuito verde esmeralda inferior -->
+          <circle cx="76" cy="71" r="4.5" stroke="#00d68f" stroke-width="3" fill="#020613"></circle>
+          <path d="M81 71L94 78H107" stroke="#00d68f" stroke-width="3.5" stroke-linecap="round"></path>
+        </svg>
+
+        <div class="brand-wordmark">
+          <div class="brand-wordmark-main">
+            <span class="idea-part">idea</span><span class="logic-part">logic</span>
+          </div>
+          <div class="brand-wordmark-line"></div>
+          <span class="brand-wordmark-sub">SERVICIO TÉCNICO INFORMÁTICO</span>
+        </div>
+      </a>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#inicio" class="active">Inicio</a></li>
+        <li><a href="#pilares">Servicios</a></li>
+        <li><a href="#impacto">Ventajas &amp; ROI</a></li>
+        <li><a href="#laboratorio">Laboratorio DB</a></li>
+        <li><a href="#cotizador">Armá tu Sistema</a></li>
+        <li><a href="#identidad">Nosotros</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="https://www.instagram.com/idealogicsa?vrfl=MXMzMms4bjhubXI5dg==" target="_blank" rel="noopener noreferrer" class="btn-liquid btn-liquid-primary btn-sm ig-dynamic-link">
+          <span>Impulsá tu Negocio →</span>
+        </a>
+        <button type="button" class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Abrir menú">
+          ☰
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ========================================================================
+       HERO SECTION: IMPACTO PRINCIPAL + CLUSTER HOLOGRÁFICO 3D INTERACTIVO
+       ======================================================================== -->
+  <section id="inicio" class="hero-section">
+    <div class="container">
+      <div class="hero-grid">
+        <!-- Columna Izquierda: Copy de Alto Impacto y Conversión -->
+        <div class="hero-copy">
+          <div class="hero-slogan-pill">
+            <span class="pulse-dot"></span>
+            <span>“Tus <span class="highlight-ideas">ideas</span>, fuente para una <span class="highlight-logica">lógica</span> eficiente”</span>
+          </div>
+
+          <h1 class="hero-title">
+            SISTEMAS &amp; <span class="text-gradient-blue">BASES DE DATOS</span> A TU MEDIDA.
+          </h1>
+
+          <p class="hero-lead">
+            En <strong>idealogic</strong> transformamos la información de tu negocio en motores digitales ultra-rápidos, seguros y personalizados. Diseñamos bases de datos desde cero, desarrollamos software a medida y brindamos soporte técnico y blindaje informático integral.
+          </p>
+
+          <div class="hero-cta-group">
+            <a href="#cotizador" class="btn-liquid btn-liquid-primary">
+              <span>&nbsp;Diseñar mi Sistema a Medida</span>
+            </a>
+            <a href="#laboratorio" class="btn-liquid btn-liquid-secondary">
+              <span>&nbsp;Probar Arquitectura en Vivo</span>
+            </a>
+          </div>
+
+          <!-- Métricas de Confianza en Liquid Glass -->
+          <div class="hero-metrics-bar">
+            <div class="liquid-glass hero-metric-card">
+              <div class="hero-metric-value">
+                <span>99.9</span><span class="unit">%</span>
+              </div>
+              <div class="hero-metric-label">Integridad &amp; Seguridad de Datos</div>
+            </div>
+            <div class="liquid-glass hero-metric-card">
+              <div class="hero-metric-value">
+                <span>&lt; 3</span><span class="unit">ms</span>
+              </div>
+              <div class="hero-metric-label">Velocidad en Consultas SQL</div>
+            </div>
+            <div class="liquid-glass hero-metric-card">
+              <div class="hero-metric-value">
+                <span>100</span><span class="unit">%</span>
+              </div>
+              <div class="hero-metric-label">Personalizado a tu Negocio</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columna Derecha: Holo-Core 3D Interactivo + Video Oficial + Póster -->
+        <div class="hero-visual-stage">
+          <div class="liquid-glass holo-core-container" id="holo-tilt-card">
+            <div class="holo-top-hud">
+              <div class="hud-status-group">
+                <span class="pulse-dot"></span>
+                <span id="hud-status-text">BASE DE DATOS: OPTIMIZADA</span>
+              </div>
+              <div class="hud-mode-tabs" role="tablist">
+                <button type="button" class="hud-tab-btn active" data-view="cluster">Cluster 3D</button>
+                <button type="button" class="hud-tab-btn" data-view="video">Video Oficial</button>
+                <button type="button" class="hud-tab-btn" data-view="poster">Póster</button>
+              </div>
+            </div>
+
+            <!-- VISTA 1: CLUSTER ISOMÉTRICO 3D INTERACTIVO (Inspirado en el Póster y Video de Idealogic) -->
+            <div class="iso-cluster-viewport" id="view-cluster">
+              <div class="iso-floor-grid"></div>
+
+              <!-- Escena SVG Interactiva de Torres de Servidor y Cilindros de Base de Datos -->
+              <svg class="holo-svg-scene" viewBox="0 0 540 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="cyl-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#083688"></stop>
+                    <stop offset="45%" stop-color="#00b4ff"></stop>
+                    <stop offset="100%" stop-color="#06235c"></stop>
+                  </linearGradient>
+                  <linearGradient id="cyl-top" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#7dd3fc"></stop>
+                    <stop offset="100%" stop-color="#0d5bd9"></stop>
+                  </linearGradient>
+                  <linearGradient id="tower-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#0f3d96" stop-opacity="0.9"></stop>
+                    <stop offset="100%" stop-color="#041230" stop-opacity="0.95"></stop>
+                  </linearGradient>
+                </defs>
+
+                <!-- Líneas de Circuito y Flujo de Datos Pulsantes -->
+                <path class="data-pulse-line" d="M115 205 L245 160 L375 205" stroke="#00b4ff" stroke-width="2.5"></path>
+                <path class="data-pulse-line" d="M165 130 L270 165 L395 125" stroke="#00d68f" stroke-width="2"></path>
+                <path class="data-pulse-line" d="M85 235 L270 235 L455 235" stroke="#00b4ff" stroke-width="2"></path>
+
+                <!-- Panel HUD Flotante Izquierdo (Código & Diagnóstico) -->
+                <g class="db-node-group" data-node-info="Servidor Principal Idealogic: Procesamiento lógico de alta disponibilidad y balanceo de carga automático.">
+                  <rect x="24" y="54" width="96" height="126" rx="8" fill="url(#tower-grad)" stroke="#00b4ff" stroke-width="1.5"></rect>
+                  <rect x="34" y="68" width="76" height="10" rx="3" fill="#00b4ff" fill-opacity="0.35"></rect>
+                  <rect x="34" y="86" width="56" height="6" rx="3" fill="#00d68f"></rect>
+                  <rect x="34" y="100" width="76" height="6" rx="3" fill="#38bdf8" fill-opacity="0.5"></rect>
+                  <rect x="34" y="114" width="66" height="6" rx="3" fill="#38bdf8" fill-opacity="0.5"></rect>
+                  <circle cx="96" cy="158" r="5" fill="#00d68f"></circle>
+                  <circle cx="80" cy="158" r="5" fill="#00b4ff"></circle>
+                  <text x="34" y="142" fill="#7dd3fc" font-family="JetBrains Mono" font-size="9">SRV-NODE 01</text>
+                </g>
+
+                <!-- Torre de Servidor Secundaria -->
+                <g class="db-node-group" data-node-info="Módulo de Seguridad &amp; Backups: Copias redundantes encriptadas y protección contra pérdida de datos.">
+                  <rect x="132" y="34" width="84" height="118" rx="8" fill="url(#tower-grad)" stroke="#38bdf8" stroke-width="1.5"></rect>
+                  <path d="M145 58 L165 48 L185 58 L202 45" stroke="#00d68f" stroke-width="2.5" fill="none"></path>
+                  <rect x="144" y="74" width="60" height="6" rx="3" fill="#00b4ff" fill-opacity="0.6"></rect>
+                  <rect x="144" y="88" width="48" height="6" rx="3" fill="#00d68f" fill-opacity="0.8"></rect>
+                  <text x="144" y="134" fill="#a5f3fc" font-family="JetBrains Mono" font-size="8.5">SHIELD AES</text>
+                </g>
+
+                <!-- Cilindro Central Principal de Base de Datos (Core SQL) -->
+                <g class="db-node-group" data-node-info="Motor Central de Base de Datos Personalizada: Índices optimizados para búsquedas en menos de 3 milisegundos.">
+                  <!-- Piso de luz -->
+                  <ellipse cx="272" cy="232" rx="64" ry="20" fill="#00b4ff" fill-opacity="0.22"></ellipse>
+                  <!-- Cuerpo del cilindro en 3 discos apilados -->
+                  <path d="M220 175 V218 C220 229 324 229 324 218 V175 Z" fill="url(#cyl-grad)" stroke="#00e1ff" stroke-width="1.5"></path>
+                  <ellipse cx="272" cy="175" rx="52" ry="15" fill="url(#cyl-top)" stroke="#ffffff" stroke-width="1"></ellipse>
+
+                  <path d="M220 132 V170 C220 181 324 181 324 170 V132 Z" fill="url(#cyl-grad)" stroke="#00e1ff" stroke-width="1.5"></path>
+                  <ellipse cx="272" cy="132" rx="52" ry="15" fill="url(#cyl-top)" stroke="#ffffff" stroke-width="1"></ellipse>
+
+                  <path d="M220 88 V126 C220 137 324 137 324 126 V88 Z" fill="url(#cyl-grad)" stroke="#00ffa3" stroke-width="1.5"></path>
+                  <ellipse cx="272" cy="88" rx="52" ry="16" fill="url(#cyl-top)" stroke="#00ffa3" stroke-width="1.5"></ellipse>
+
+                  <!-- Onda lógica interna -->
+                  <path d="M238 110 Q255 98 272 110 T306 110" stroke="#00ffa3" stroke-width="2.5" fill="none"></path>
+                  <text x="242" y="92" fill="#020613" font-family="JetBrains Mono" font-weight="700" font-size="9.5">CORE DB</text>
+                </g>
+
+                <!-- Cilindro Izquierdo (Soporte & Índices) -->
+                <g class="db-node-group" data-node-info="Nodo de Soporte &amp; Mantenimiento: Monitoreo activo del rendimiento de estaciones y servidores.">
+                  <path d="M128 166 V222 C128 230 198 230 198 222 V166 Z" fill="url(#cyl-grad)" stroke="#00b4ff" stroke-width="1.4"></path>
+                  <ellipse cx="163" cy="166" rx="35" ry="11" fill="url(#cyl-top)" stroke="#7dd3fc" stroke-width="1.2"></ellipse>
+                  <path d="M136 194 H190" stroke="#00d68f" stroke-width="2"></path>
+                  <text x="142" y="169" fill="#020613" font-family="JetBrains Mono" font-weight="700" font-size="8">INDEX</text>
+                </g>
+
+                <!-- Cilindro Derecho (Soluciones Cloud & Réplica) -->
+                <g class="db-node-group" data-node-info="Nodo de Soluciones Escalables: Sincronización multi-dispositivo y acceso seguro en red o nube.">
+                  <path d="M348 152 V220 C348 229 422 229 422 220 V152 Z" fill="url(#cyl-grad)" stroke="#00d68f" stroke-width="1.4"></path>
+                  <ellipse cx="385" cy="152" rx="37" ry="11" fill="url(#cyl-top)" stroke="#00ffa3" stroke-width="1.2"></ellipse>
+                  <path d="M356 184 H414" stroke="#00b4ff" stroke-width="2"></path>
+                  <text x="364" y="155" fill="#020613" font-family="JetBrains Mono" font-weight="700" font-size="8">CLOUD</text>
+                </g>
+
+                <!-- Panel HUD Holográfico Derecho (Métricas en Tiempo Real) -->
+                <g class="db-node-group" data-node-info="Panel de Analítica en Tiempo Real: Visualizá ventas, stock, clientes y rendimiento al instante.">
+                  <rect x="408" y="46" width="110" height="96" rx="8" fill="url(#tower-grad)" stroke="#00d68f" stroke-width="1.5"></rect>
+                  <!-- Gráfico de barras ascendente -->
+                  <rect x="424" y="106" width="10" height="22" rx="2" fill="#0d5bd9"></rect>
+                  <rect x="440" y="94" width="10" height="34" rx="2" fill="#00b4ff"></rect>
+                  <rect x="456" y="82" width="10" height="46" rx="2" fill="#38bdf8"></rect>
+                  <rect x="472" y="68" width="10" height="60" rx="2" fill="#00d68f"></rect>
+                  <rect x="488" y="58" width="10" height="70" rx="2" fill="#00ffa3"></rect>
+                  <text x="422" y="64" fill="#a7f3d0" font-family="JetBrains Mono" font-size="8.5">ANALYTICS+</text>
+                </g>
+              </svg>
+
+              <!-- Telemetría Interactiva en la Base del Cluster -->
+              <div class="holo-live-telemetry">
+                <div class="telemetry-item">
+                  <span class="telemetry-label">LATENCIA MOTOR</span>
+                  <span class="telemetry-val" id="telemetry-latency">1.9 ms</span>
+                </div>
+                <div class="telemetry-item">
+                  <span class="telemetry-label">ESTADO SISTEMA</span>
+                  <span class="telemetry-val" id="telemetry-state">BLINDADO ✓</span>
+                </div>
+                <div class="telemetry-item">
+                  <span class="telemetry-label">RENDIMIENTO</span>
+                  <span class="telemetry-val" id="telemetry-throughput">100% TURBO</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- VISTA 2: VIDEO HOLOGRÁFICO OFICIAL DE IDEALOGIC -->
+            <div class="holo-video-viewport" id="view-video">
+              <video id="hero-official-video" src="assets/intro-idealogic.mp4" poster="assets/flyer-idealogic.jpg" controls playsinline loop></video>
+            </div>
+
+            <!-- VISTA 3: PÓSTER OFICIAL DE IDEALOGIC -->
+            <div class="holo-video-viewport" id="view-poster">
+              <img src="assets/flyer-idealogic.jpg" alt="Póster Oficial Idealogic - Sistemas y Bases de Datos a tu medida" id="hero-official-poster" />
+            </div>
+
+            <!-- Controles Interactivos del Holo-Stage -->
+            <div class="holo-bottom-controls">
+              <span class="holo-node-status" id="holo-node-desc">💡 Hacé clic en cualquier servidor/base de datos o ejecutá un pulso lógico.</span>
+              <button type="button" class="btn-liquid btn-liquid-secondary btn-sm" id="btn-pulse-boost">
+                ⚡ Impulso Lógico
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       LOS 4 PILARES DE IDEALOGIC (SOPORTE, REPARACIÓN, SEGURIDAD, SOLUCIONES)
+       ======================================================================== -->
+  <section id="pilares">
+    <div class="container">
+      <div class="section-header">
+        <div class="liquid-badge">
+          <span class="pulse-dot"></span>
+          <span>NUESTROS 4 PILARES DE INGENIERÍA</span>
+        </div>
+        <h2 class="section-title">
+          Soluciones Informáticas que <span class="text-gradient-blue">Venden, Protegen y Escalan</span>
+        </h2>
+        <p class="section-subtitle">
+          No entregamos sistemas genéricos ni parches temporales. Combinamos desarrollo de bases de datos a medida con servicio técnico de precisión para que tu negocio nunca se detenga.
+        </p>
+      </div>
+
+      <div class="pillars-bento-grid">
+        <!-- PILAR 1: SOLUCIONES & BASES DE DATOS -->
+        <article class="liquid-glass liquid-card-interactive pillar-card">
+          <div>
+            <div class="pillar-top">
+              <div class="pillar-icon-ring" aria-hidden="true">
+                <!-- Ícono Nube + Base de Datos (exacto al póster) -->
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path>
+                  <ellipse cx="12" cy="13" rx="3" ry="1.2"></ellipse>
+                  <path d="M9 13v3c0 .66 1.34 1.2 3 1.2s3-.54 3-1.2v-3"></path>
+                </svg>
+              </div>
+              <span class="pillar-number">01 • SOLUCIONES</span>
+            </div>
+            <h3 class="pillar-title">Bases de Datos &amp; Sistemas a Medida</h3>
+            <p class="pillar-desc">
+              Diseñamos y programamos la arquitectura exacta que tu empresa necesita: control de stock, ventas, clientes, turnos o gestión institucional. Sin límites de filas ni lentitud.
+            </p>
+            <ul class="pillar-features">
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Modelado SQL Relacional</span>
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Interfaces Intuitivas y Rápidas</span>
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Reportes y Estadísticas al Instante</span>
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Migración desde Excel sin Pérdidas</span>
+              </li>
+            </ul>
+          </div>
+          <div class="pillar-footer">
+            <span class="pillar-metric-tag">&nbsp;Hasta 25x más veloz que planillas</span>
+            <a href="#cotizador" class="btn-liquid btn-liquid-secondary btn-sm" data-select-service="Base de Datos &amp; Sistema a Medida">
+              Cotizar Solución →
+            </a>
+          </div>
+        </article>
+
+        <!-- PILAR 2: SOPORTE TÉCNICO -->
+        <article class="liquid-glass liquid-card-interactive pillar-card">
+          <div>
+            <div class="pillar-top">
+              <div class="pillar-icon-ring" aria-hidden="true">
+                <!-- Ícono Monitor Soporte (exacto al póster) -->
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="3" width="20" height="14" rx="2"></rect>
+                  <line x1="8" y1="21" x2="16" y2="21"></line>
+                  <line x1="12" y1="17" x2="12" y2="21"></line>
+                  <path d="M9 10l2 2 4-4"></path>
+                </svg>
+              </div>
+              <span class="pillar-number">02 • SOPORTE</span>
+            </div>
+            <h3 class="pillar-title">Soporte Técnico Informático Integral</h3>
+            <p class="pillar-desc">
+              Acompañamiento continuo para que tus sistemas, redes y estaciones de trabajo funcionen siempre al 100%. Asistencia ágil remota y presencial cuando más lo necesitás.
+            </p>
+            <ul class="pillar-features">
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Mantenimiento Preventivo</span>
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Asistencia Remota y en Sitio</span>
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Configuración de Redes y Servidores</span>
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Actualización Continua de Software</span>
+              </li>
+            </ul>
+          </div>
+          <div class="pillar-footer">
+            <span class="pillar-metric-tag">&nbsp;Respuesta rápida y trato directo</span>
+            <a href="#cotizador" class="btn-liquid btn-liquid-secondary btn-sm" data-select-service="Soporte Técnico Informático">
+              Solicitar Soporte →
+            </a>
+          </div>
+        </article>
+
+        <!-- PILAR 3: REPARACIÓN & OPTIMIZACIÓN -->
+        <article class="liquid-glass liquid-card-interactive pillar-card">
+          <div>
+            <div class="pillar-top">
+              <div class="pillar-icon-ring" aria-hidden="true">
+                <!-- Ícono Herramientas Cruzadas (exacto al póster) -->
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                </svg>
+              </div>
+              <span class="pillar-number">03 • REPARACIÓN</span>
+            </div>
+            <h3 class="pillar-title">Reparación &amp; Optimización de Equipos</h3>
+            <p class="pillar-desc">
+              Devolvemos la velocidad y estabilidad a tus computadoras y servidores. Diagnóstico preciso de fallas de hardware y software, limpieza profunda y potenciación de rendimiento.
+            </p>
+            <ul class="pillar-features">
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Diagnóstico de Hardware y PC</span>
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Aceleración de Arranque y Sistema</span>
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Formateo Seguro y Drivers Oficiales</span>
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Recuperación de Archivos Críticos</span>
+              </li>
+            </ul>
+          </div>
+          <div class="pillar-footer">
+            <span class="pillar-metric-tag">&nbsp;Equipos como nuevos y sin cuelgues</span>
+            <a href="#cotizador" class="btn-liquid btn-liquid-secondary btn-sm" data-select-service="Reparación &amp; Optimización de Equipos">
+              Agendar Diagnóstico →
+            </a>
+          </div>
+        </article>
+
+        <!-- PILAR 4: SEGURIDAD INFORMÁTICA -->
+        <article class="liquid-glass liquid-card-interactive pillar-card">
+          <div>
+            <div class="pillar-top">
+              <div class="pillar-icon-ring" aria-hidden="true">
+                <!-- Ícono Escudo Seguridad (exacto al póster) -->
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  <path d="M9 12l2 2 4-4"></path>
+                </svg>
+              </div>
+              <span class="pillar-number">04 • SEGURIDAD</span>
+            </div>
+            <h3 class="pillar-title">Seguridad &amp; Blindaje de Información</h3>
+            <p class="pillar-desc">
+              Tu información es el activo más valioso de tu empresa. Implementamos copias de seguridad automatizadas, permisos por usuario, encriptación y blindaje contra pérdidas o accesos no autorizados.
+            </p>
+            <ul class="pillar-features">
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Backups Automáticos Local y Nube</span>
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Control de Acceso por Roles</span>
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Eliminación de Malware y Virus</span>
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Auditoría de Integridad de Datos</span>
+              </li>
+            </ul>
+          </div>
+          <div class="pillar-footer">
+            <span class="pillar-metric-tag">&nbsp;Cero pérdida de datos garantizada</span>
+            <a href="#cotizador" class="btn-liquid btn-liquid-secondary btn-sm" data-select-service="Seguridad &amp; Blindaje de Datos">
+              Blindar mi Sistema →
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       ESCÁNER INTERACTIVO DE DIAGNÓSTICO INFORMÁTICO EN 30 SEGUNDOS
+       ======================================================================== -->
+  <section id="diagnostico">
+    <div class="container">
+      <div class="section-header">
+        <div class="liquid-badge">
+          <span class="pulse-dot"></span>
+          <span>TEST INTERACTIVO DE SALUD DIGITAL</span>
+        </div>
+        <h2 class="section-title">
+          ¿Qué Tan Protegido y Eficiente Está tu <span class="text-gradient-blue">Sistema Hoy</span>?
+        </h2>
+        <p class="section-subtitle">
+          Marcá las situaciones que hoy ocurren en tu negocio, oficina o computadora y mirá en vivo el diagnóstico técnico de Idealogic:
+        </p>
+      </div>
+
+      <div class="diagnostic-grid">
+        <div class="symptoms-list-grid" id="symptoms-grid">
+          <button type="button" class="symptom-toggle-card active" data-penalty="22" data-fix="Crear Base de Datos Relacional Centralizada para reemplazar planillas sueltas.">
+            <span class="symptom-check">!</span>
+            <div>
+              <strong style="display:block; margin-bottom:4px; font-family:var(--font-display);">Uso planillas de Excel o cuadernos para anotar ventas/stock</strong>
+              <span style="font-size:0.84rem; color:var(--text-secondary);">Riesgo de errores manuales, datos duplicados y lentitud al buscar.</span>
+            </div>
+          </button>
+
+          <button type="button" class="symptom-toggle-card" data-penalty="25" data-fix="Implementar Backups Automáticos Encriptados (Local + Nube) de Idealogic.">
+            <span class="symptom-check">!</span>
+            <div>
+              <strong style="display:block; margin-bottom:4px; font-family:var(--font-display);">No tengo copias de seguridad automáticas diarias</strong>
+              <span style="font-size:0.84rem; color:var(--text-secondary);">Si una PC falla o se borra un archivo, se pierde información valiosa.</span>
+            </div>
+          </button>
+
+          <button type="button" class="symptom-toggle-card" data-penalty="18" data-fix="Servicio de Reparación, Limpieza Lógica y Optimización de Equipos Idealogic.">
+            <span class="symptom-check">!</span>
+            <div>
+              <strong style="display:block; margin-bottom:4px; font-family:var(--font-display);">Mis computadoras tardan en prender o se traban seguido</strong>
+              <span style="font-size:0.84rem; color:var(--text-secondary);">Falta de mantenimiento técnico preventivo, optimización de sistema o hardware.</span>
+            </div>
+          </button>
+
+          <button type="button" class="symptom-toggle-card" data-penalty="20" data-fix="Configurar Control de Accesos por Roles y Auditoría de Usuarios.">
+            <span class="symptom-check">!</span>
+            <div>
+              <strong style="display:block; margin-bottom:4px; font-family:var(--font-display);">Cualquier persona puede ver o modificar todos los archivos</strong>
+              <span style="font-size:0.84rem; color:var(--text-secondary);">Sin permisos diferenciados para administradores, cajeros o vendedores.</span>
+            </div>
+          </button>
+
+          <button type="button" class="symptom-toggle-card" data-penalty="15" data-fix="Desarrollar Panel de Reportes Automáticos en Tiempo Real.">
+            <span class="symptom-check">!</span>
+            <div>
+              <strong style="display:block; margin-bottom:4px; font-family:var(--font-display);">Tardo horas en saber mi ganancia real o el stock exacto</strong>
+              <span style="font-size:0.84rem; color:var(--text-secondary);">Falta de lógica automatizada que calcule métricas al instante.</span>
+            </div>
+          </button>
+
+          <button type="button" class="symptom-toggle-card" data-penalty="16" data-fix="Plan de Soporte Técnico Informático Directo Idealogic.">
+            <span class="symptom-check">!</span>
+            <div>
+              <strong style="display:block; margin-bottom:4px; font-family:var(--font-display);">No cuento con un equipo técnico de confianza ante urgencias</strong>
+              <span style="font-size:0.84rem; color:var(--text-secondary);">Cuando algo falla, el negocio queda frenado sin soporte inmediato.</span>
+            </div>
+          </button>
+        </div>
+
+        <!-- Medidor Circular Liquid Glass de Salud del Sistema -->
+        <div class="liquid-glass health-gauge-panel">
+          <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--brand-cyan); letter-spacing:0.1em;">
+            ÍNDICE DE EFICIENCIA &amp; SEGURIDAD
+          </span>
+
+          <div class="gauge-ring-wrap">
+            <svg class="gauge-ring-svg" viewBox="0 0 160 160">
+              <circle class="gauge-ring-bg" cx="80" cy="80" r="70"></circle>
+              <circle class="gauge-ring-progress" id="health-ring-circle" cx="80" cy="80" r="70"></circle>
+            </svg>
+            <div class="gauge-center-score">
+              <span class="gauge-score-num" id="health-score-num">78%</span>
+              <span class="gauge-score-lbl" id="health-score-status">MEJORABLE</span>
+            </div>
+          </div>
+
+          <div style="text-align:left; width:100%; background:rgba(2, 8, 23, 0.6); border:1px solid rgba(0, 180, 255, 0.22); border-radius:16px; padding:14px; margin-bottom:16px;">
+            <div style="font-family:var(--font-mono); font-size:0.72rem; color:var(--brand-emerald); margin-bottom:6px;">
+              🔧 SOLUCIÓN RECOMENDADA POR IDEALOGIC:
+            </div>
+            <p id="health-fix-recommendation" style="font-size:0.86rem; color:#e2e8f0; line-height:1.5;">Crear Base de Datos Relacional Centralizada para reemplazar planillas sueltas.</p>
+          </div>
+
+          <a href="#cotizador" class="btn-liquid btn-liquid-primary btn-sm" style="width:100%;">
+            Resolver Estos Puntos con Idealogic →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       SECCIÓN DE MARKETING Y CONVERSIÓN: ANTES VS DESPUÉS + CALCULADORA ROI
+       ======================================================================== -->
+  <section id="impacto">
+    <div class="container">
+      <div class="section-header">
+        <div class="liquid-badge">
+          <span class="pulse-dot"></span>
+          <span>POR QUÉ ELEGIR IDEALOGIC</span>
+        </div>
+        <h2 class="section-title">
+          De la Frustración de Archivos Lentos a una <span class="text-gradient-emerald">Lógica Eficiente</span>
+        </h2>
+        <p class="section-subtitle">
+          Muchos negocios pierden ventas y horas de trabajo todos los días por usar hojas de cálculo saturadas o equipos sin mantenimiento. Mirá la diferencia real al implementar Idealogic:
+        </p>
+      </div>
+
+      <div class="liquid-glass comparison-wrapper">
+        <div class="comparison-grid">
+          <!-- Columna Sin Idealogic -->
+          <div class="comp-column comp-chaos">
+            <div class="comp-header">
+              <h3 style="font-family:var(--font-display); font-size:1.35rem; color:#fda4af;">
+                ❌ Gestión Improvisada / Planillas
+              </h3>
+              <span style="font-family:var(--font-mono); font-size:0.75rem; color:#fb7185; background:rgba(244,63,94,0.18); padding:4px 10px; border-radius:99px;">Alto Riesgo</span>
+            </div>
+            <ul class="comp-list">
+              <li>⚠️ <strong>Archivos duplicados y desactualizados:</strong> nadie sabe cuál es la versión real del stock o las cuentas.</li>
+              <li>🐢 <strong>Lentitud extrema:</strong> cuando superás unos miles de registros, las planillas se cuelgan o tardan minutos.</li>
+              <li>🔓 <strong>Riesgo total de pérdida:</strong> un borrado accidental o un fallo de disco puede hacerte perder meses de trabajo.</li>
+              <li>🛑 <strong>Equipos sin soporte preventivo:</strong> computadoras lentas que se traban justo frente al cliente.</li>
+            </ul>
+          </div>
+
+          <!-- Columna Con Idealogic -->
+          <div class="comp-column comp-idealogic">
+            <div class="comp-header">
+              <h3 style="font-family:var(--font-display); font-size:1.35rem; color:#6ee7b7;">
+                ✅ Ecosistema Personalizado idealogic
+              </h3>
+              <span style="font-family:var(--font-mono); font-size:0.75rem; color:#00d68f; background:rgba(0,214,143,0.18); padding:4px 10px; border-radius:99px;">Lógica Eficiente</span>
+            </div>
+            <ul class="comp-list">
+              <li><br /><strong>Base de Datos Centralizada a Medida:</strong> toda tu información unificada, validada y accesible en milisegundos.</li>
+              <li><br /><strong>Reportes y Decisiones en 1 Clic:</strong> sabé exactamente cuánto vendiste, qué reponer y quién te debe al instante.</li>
+              <li><br /><strong>Seguridad y Backups Automáticos:</strong> permisos por empleado y copias blindadas para que jamás pierdas un dato.</li>
+              <li><br /><strong>Soporte Técnico Directo:</strong> tus computadoras y sistemas mantenidos por especialistas que conocen tu negocio.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Calculadora Interactiva de Retorno de Inversión (ROI) -->
+        <div class="roi-calculator-strip">
+          <div class="roi-slider-group">
+            <label for="ops-range">
+              <span>&nbsp;Simulá el volumen de tu negocio (operaciones/consultas por día):</span>
+              <span id="ops-value-display" style="color:var(--brand-cyan); font-family:var(--font-mono);">20 / día</span>
+            </label>
+            <input type="range" id="ops-range" class="liquid-range" min="20" max="500" step="10" value="20" />
+            <p style="font-size:0.8rem; color:var(--text-muted); margin-top:8px;">
+              Deslizá la barra para calcular el impacto estimado de automatizar tu base de datos con Idealogic.
+            </p>
+          </div>
+
+          <div class="roi-results">
+            <div class="roi-stat-box">
+              <div class="roi-stat-num" id="roi-hours-saved">7 hs</div>
+              <div class="roi-stat-txt">Ahorradas por Mes</div>
+            </div>
+            <div class="roi-stat-box">
+              <div class="roi-stat-num" id="roi-errors-cut">-98.8%</div>
+              <div class="roi-stat-txt">Errores de Carga</div>
+            </div>
+            <div class="roi-stat-box">
+              <div class="roi-stat-num" id="roi-speed-boost">12x</div>
+              <div class="roi-stat-txt">Más Velocidad</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       LABORATORIO INTERACTIVO DE ARQUITECTURA DE BASES DE DATOS (SANDBOX)
+       ======================================================================== -->
+  <section id="laboratorio">
+    <div class="container">
+      <div class="section-header">
+        <div class="liquid-badge">
+          <span class="pulse-dot"></span>
+          <span>EXPERIENCIA INTERACTIVA EN VIVO</span>
+        </div>
+        <h2 class="section-title">
+          Explorá Cómo Funciona una <span class="text-gradient-blue">Base de Datos Idealogic</span> por Dentro
+        </h2>
+        <p class="section-subtitle">
+          Seleccioná el rubro de tu empresa o institución para interactuar con un modelo real de tablas relacionales, simular consultas SQL de alta velocidad y comprobar el blindaje de datos.
+        </p>
+      </div>
+
+      <div class="liquid-glass db-sandbox-shell">
+        <!-- Botones de Escenario -->
+        <div class="scenario-selector" role="tablist">
+          <button type="button" class="scenario-btn active" data-scenario="comercio">🏪 Comercio, Stock &amp; Ventas</button>
+          <button type="button" class="scenario-btn" data-scenario="clinica">🏥 Clínica &amp; Gestión de Turnos</button>
+          <button type="button" class="scenario-btn" data-scenario="academico">🎓 Gestión Académica / BTI</button>
+          <button type="button" class="scenario-btn" data-scenario="empresarial">🏢 PyMEs, Finanzas &amp; CRM</button>
+        </div>
+
+        <div class="sandbox-workspace">
+          <!-- Panel Izquierdo: Diagrama de Nodos Relacionales Interactivo -->
+          <div class="er-canvas-panel">
+            <div>
+              <div class="er-header-bar">
+                <div>
+                  <span id="scenario-badge" style="font-family:var(--font-mono); font-size:0.75rem; color:var(--brand-emerald); text-transform:uppercase;">Retail &amp; Inventario</span>
+                  <h3 id="scenario-title" style="font-family:var(--font-display); font-size:1.35rem; margin-top:2px;">Sistema de Stock, Ventas &amp; Facturación Inteligente</h3>
+                </div>
+                <span style="font-family:var(--font-mono); font-size:0.74rem; color:var(--brand-cyan); background:rgba(0,180,255,0.12); padding:6px 12px; border-radius:99px; border:1px solid rgba(0,180,255,0.3);">
+                  🔗 Relaciones Activas (Hacé clic en una tabla)
+                </span>
+              </div>
+              <p id="scenario-desc" style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:20px;">
+                Arquitectura relacional de alta velocidad para comercios y distribuidoras. Control de stock en tiempo real, alertas de reposición automática y trazabilidad total de caja.
+              </p>
+
+              <!-- Grilla dinámica de tablas renderizada por JS -->
+              <div class="er-tables-grid" id="er-tables-grid"></div>
+            </div>
+
+            <div style="margin-top:20px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.08);">
+              <span style="font-family:var(--font-mono); font-size:0.78rem; color:var(--text-secondary);" id="er-selection-status">
+                ✅ Todas las tablas normalizadas (3FN) con llaves foráneas verificadas.
+              </span>
+              <a href="#cotizador" class="btn-liquid btn-liquid-primary btn-sm">
+                Quiero esta Arquitectura para mi Negocio →
+              </a>
+            </div>
+          </div>
+
+          <!-- Panel Derecho: Consola SQL & Benchmark en Vivo -->
+          <div class="sql-console-panel">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-family:var(--font-mono); font-size:0.78rem; color:var(--brand-cyan); font-weight:700;">
+                  &gt;_ MOTOR SQL IDEALOGIC v2026
+                </span>
+                <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--brand-emerald);" id="sql-exec-badge">OK • 2.2 ms (OPTIMIZADO)</span>
+              </div>
+
+              <pre class="sql-code-window" id="sql-code-preview"></pre>
+
+              <div class="benchmark-meter-box">
+                <div class="bench-row">
+                  <span>Tiempo en Planilla Tradicional:</span>
+                  <span style="color:#fb7185;" id="bench-before">380 ms</span>
+                </div>
+                <div class="bench-row">
+                  <span>Tiempo en Base de Datos Idealogic:</span>
+                  <span style="color:var(--brand-emerald); font-weight:700;" id="bench-after">2.2 ms</span>
+                </div>
+                <div class="bench-bar-track">
+                  <div class="bench-bar-fill" id="bench-bar-fill" style="width: 98%;"></div>
+                </div>
+                <div class="bench-row" style="margin-bottom:0;">
+                  <span>Integridad Criptográfica:</span>
+                  <span style="color:var(--brand-cyan);" id="bench-integrity">99.99% VERIFIED</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <button type="button" class="btn-liquid btn-liquid-primary btn-sm" style="flex:1;" id="btn-run-query">
+                ⚡ Ejecutar Consulta en Vivo
+              </button>
+              <button type="button" class="btn-liquid btn-liquid-secondary btn-sm" id="btn-test-backup">
+                🛡️ Test Backup
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       CONFIGURADOR Y COTIZADOR INTELIGENTE ("ARMÁ TU SISTEMA A MEDIDA")
+       ======================================================================== -->
+  <section id="cotizador">
+    <div class="container">
+      <div class="section-header">
+        <div class="liquid-badge">
+          <span class="pulse-dot"></span>
+          <span>CONFIGURADOR INTERACTIVO DE SOLUCIONES</span>
+        </div>
+        <h2 class="section-title">
+          Armá tu Propuesta <span class="text-gradient-blue">100% a Medida</span> en 30 Segundos
+        </h2>
+        <p class="section-subtitle">
+          Seleccioná qué necesita tu proyecto hoy. Nuestro sistema generará tu resumen técnico personalizado listo para enviarnos al DM de Instagram o contacto directo.
+        </p>
+      </div>
+
+      <div class="configurator-grid">
+        <!-- Pasos Interactivos -->
+        <div class="liquid-glass config-steps-card">
+          <!-- Paso 1 -->
+          <div class="config-step-block">
+            <div class="config-step-title">
+              <span class="step-badge-num">1</span>
+              <span>¿Qué servicio principal estás buscando? (Podés elegir varios)</span>
+            </div>
+            <div class="config-options-grid" id="cfg-group-service">
+              <button type="button" class="config-chip selected" data-val="Base de Datos &amp; Sistema a Medida">
+                <span>🗄️</span> <span>Base de Datos &amp; Sistema a Medida</span>
+              </button>
+              <button type="button" class="config-chip selected" data-val="Soporte Técnico Informático">
+                <span>🖥️</span> <span>Soporte Técnico Informático</span>
+              </button>
+              <button type="button" class="config-chip selected" data-val="Reparación &amp; Optimización de Equipos">
+                <span>🔧</span> <span>Reparación &amp; Optimización de PC</span>
+              </button>
+              <button type="button" class="config-chip selected" data-val="Seguridad &amp; Blindaje de Datos">
+                <span>🛡️</span> <span>Seguridad &amp; Copias de Respaldo</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Paso 2 -->
+          <div class="config-step-block">
+            <div class="config-step-title">
+              <span class="step-badge-num">2</span>
+              <span>¿Qué módulos o funciones te gustaría incluir?</span>
+            </div>
+            <div class="config-options-grid" id="cfg-group-modules">
+              <button type="button" class="config-chip selected" data-val="Control de Stock, Ventas y Clientes">
+                <span>📦</span> <span>Control de Stock, Ventas y Clientes</span>
+              </button>
+              <button type="button" class="config-chip selected" data-val="Panel de Estadísticas en Tiempo Real">
+                <span>📊</span> <span>Panel de Estadísticas en Tiempo Real</span>
+              </button>
+              <button type="button" class="config-chip" data-val="Múltiples Usuarios con Permisos por Rol">
+                <span>🔐</span> <span>Usuarios con Permisos por Rol</span>
+              </button>
+              <button type="button" class="config-chip" data-val="Backups Automáticos y Encriptación">
+                <span>☁️</span> <span>Backups Automáticos Blindados</span>
+              </button>
+              <button type="button" class="config-chip" data-val="Migración de Planillas Excel Existentes">
+                <span>🔄</span> <span>Migración de Planillas Excel</span>
+              </button>
+              <button type="button" class="config-chip" data-val="Mantenimiento Preventivo de Equipos">
+                <span>⚡</span> <span>Mantenimiento Preventivo de PCs</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Paso 3 -->
+          <div class="config-step-block">
+            <div class="config-step-title">
+              <span class="step-badge-num">3</span>
+              <span>Contanos brevemente tu idea o el nombre de tu negocio (Opcional)</span>
+            </div>
+            <input type="text" id="cfg-custom-note" class="studio-input" style="padding:14px 16px; font-size:0.95rem; border-radius:14px;" placeholder="Ej: Tengo un comercio / consultorio y quiero organizar mi inventario y ventas..." />
+          </div>
+        </div>
+
+        <!-- Resumen Blueprint en Vivo -->
+        <div class="liquid-glass config-summary-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--brand-emerald); font-weight:700;">
+              BLUEPRINT IDEALOGIC
+            </span>
+            <span style="font-family:var(--font-mono); font-size:0.72rem; color:var(--brand-cyan);">
+              100% PERSONALIZADO
+            </span>
+          </div>
+          <h3 style="font-family:var(--font-display); font-size:1.45rem;">
+            Tu Arquitectura Recomendada
+          </h3>
+          <p style="font-size:0.88rem; color:var(--text-secondary); margin-top:4px;">
+            Lista para ser diseñada por el equipo de Idealogic:
+          </p>
+
+          <ul class="summary-blueprint-list" id="cfg-summary-list"></ul>
+
+          <div style="background:rgba(0, 214, 143, 0.1); border:1px solid rgba(0, 214, 143, 0.3); border-radius:14px; padding:12px 14px; margin-bottom:18px; font-size:0.84rem; color:#d1fae5;">
+            ✨ <strong>Garantía Idealogic:</strong> Diseño adaptado a tu flujo de trabajo + capacitación de uso + soporte técnico.
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <button type="button" class="btn-liquid btn-liquid-primary" id="btn-send-proposal" style="width:100%;">
+              🚀 Enviar Mi Idea por Instagram DM (@idealogicsa)
+            </button>
+            <button type="button" class="btn-liquid btn-liquid-secondary btn-sm" id="btn-copy-proposal" style="width:100%;">
+              📋 Copiar Resumen de mi Proyecto
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       IDENTIDAD VISUAL, VIDEO OFICIAL Y SELLO INSTITUCIONAL (C.R.E.S.R. 3ro 'A' BTI)
+       ======================================================================== -->
+  <section id="identidad">
+    <div class="container">
+      <div class="section-header">
+        <div class="liquid-badge">
+          <span class="pulse-dot"></span>
+          <span>NUESTRA ESENCIA &amp; PRESENTACIÓN OFICIAL</span>
+        </div>
+        <h2 class="section-title">
+          Ingeniería Joven, <span class="text-gradient-blue">Visión de Futuro</span>
+        </h2>
+        <p class="section-subtitle">
+          Conocé nuestra presentación audiovisual y nuestra identidad nacida con el sello de excelencia técnica del <strong>3ro 'A' BTI — 2026 (C.R.E.S.R. San Lorenzo)</strong>.
+        </p>
+      </div>
+
+      <div class="showcase-grid">
+        <!-- Video Oficial de Idealogic -->
+        <div class="liquid-glass showcase-media-card">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+              <span style="font-family:var(--font-mono); font-size:0.78rem; color:var(--brand-cyan); font-weight:700;">
+                🎬 SPOT AUDIOVISUAL OFICIAL • IDEALOGIC
+              </span>
+              <span style="font-family:var(--font-mono); font-size:0.72rem; color:var(--brand-emerald);">HD 60FPS</span>
+            </div>
+            <div class="video-frame-wrapper">
+              <video id="showcase-video" src="assets/intro-idealogic.mp4" poster="assets/flyer-idealogic.jpg" controls playsinline></video>
+            </div>
+          </div>
+          <div style="margin-top:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+            <p style="font-size:0.9rem; color:var(--text-secondary);">
+              “Tus ideas, fuente para una lógica eficiente” — Visualización de nuestro ecosistema de datos.
+            </p>
+            <a href="https://www.instagram.com/idealogicsa?vrfl=MXMzMms4bjhubXI5dg==" target="_blank" rel="noopener noreferrer" class="btn-liquid btn-liquid-secondary btn-sm ig-dynamic-link">
+              Ver más en @idealogicsa →
+            </a>
+          </div>
+        </div>
+
+        <!-- Póster Oficial & Identidad -->
+        <div class="liquid-glass showcase-media-card">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+              <span style="font-family:var(--font-mono); font-size:0.78rem; color:var(--brand-emerald); font-weight:700;">
+                💠 AFICHE OFICIAL DE SERVICIOS
+              </span>
+              <span style="font-family:var(--font-mono); font-size:0.72rem; color:var(--text-secondary);">2026 EDITION</span>
+            </div>
+            <div class="flyer-frame-wrapper">
+              <img id="showcase-flyer-img" src="assets/flyer-idealogic.jpg" alt="Afiche Oficial Idealogic - Sistemas y Bases de Datos a tu medida" />
+            </div>
+          </div>
+          <div style="margin-top:16px;">
+            <p style="font-size:0.88rem; color:var(--text-secondary);">
+              Soporte • Reparación • Seguridad • Soluciones Informáticas personalizadas.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Banner Institucional C.R.E.S.R. San Lorenzo — 3ro 'A' BTI 2026 -->
+      <div class="liquid-glass institutional-banner">
+        <div style="display:flex; align-items:center; gap:20px; flex-wrap:wrap;">
+          <img src="assets/logo-transparent.png" alt="Logo Idealogic" id="institutional-logo-img" style="height:68px; width:auto; border-radius:12px;" />
+          <div>
+            <div style="font-family:var(--font-mono); font-size:0.78rem; color:var(--brand-emerald); letter-spacing:0.12em;">
+              C.R.E.S.R. • BACHILLERATO TÉCNICO EN INFORMÁTICA • SAN LORENZO
+            </div>
+            <h3 style="font-family:var(--font-display); font-size:1.6rem; margin:4px 0;">
+              3ro ‘A’ BTI — 2026 • <span class="text-gradient-blue">“Programando el Futuro”</span>
+            </h3>
+            <p style="color:var(--text-secondary); font-size:0.94rem;">
+              Proyecto empresarial y tecnológico desarrollado con estándares profesionales de ingeniería de datos, soporte técnico y seguridad informática.
+            </p>
+          </div>
+        </div>
+        <a href="https://www.instagram.com/idealogicsa?vrfl=MXMzMms4bjhubXI5dg==" target="_blank" rel="noopener noreferrer" class="btn-liquid btn-liquid-primary ig-dynamic-link">
+          <span>📲 Seguinos en Instagram @idealogicsa</span>
+        </a>
+      </div>
+
+      <!-- Metodología en 4 Pasos Interactiva -->
+      <div style="margin-top:58px;">
+        <h3 style="font-family:var(--font-display); font-size:1.75rem; text-align:center; margin-bottom:28px;">
+          Nuestro Proceso: De tu <span class="text-gradient-emerald">Idea</span> a una <span class="text-gradient-blue">Lógica Eficiente</span>
+        </h3>
+        <div class="process-steps-grid">
+          <div class="liquid-glass liquid-card-interactive process-step-card active-step">
+            <span class="process-step-num">PASO 01</span>
+            <h4 style="font-family:var(--font-display); font-size:1.18rem; margin-bottom:8px;">Escuchamos tu Idea</h4>
+            <p style="font-size:0.88rem; color:var(--text-secondary);">
+              Analizamos cómo trabaja tu negocio hoy, qué problemas tenés y qué datos necesitás controlar sin complicaciones.
+            </p>
+          </div>
+          <div class="liquid-glass liquid-card-interactive process-step-card">
+            <span class="process-step-num">PASO 02</span>
+            <h4 style="font-family:var(--font-display); font-size:1.18rem; margin-bottom:8px;">Diseño de Arquitectura</h4>
+            <p style="font-size:0.88rem; color:var(--text-secondary);">
+              Creamos el modelo de base de datos relacional a medida y una interfaz visual clara, rápida y fácil de usar.
+            </p>
+          </div>
+          <div class="liquid-glass liquid-card-interactive process-step-card">
+            <span class="process-step-num">PASO 03</span>
+            <h4 style="font-family:var(--font-display); font-size:1.18rem; margin-bottom:8px;">Blindaje &amp; Optimización</h4>
+            <p style="font-size:0.88rem; color:var(--text-secondary);">
+              Configuramos seguridad por roles, copias de respaldo automáticas y dejamos tus equipos funcionando al máximo.
+            </p>
+          </div>
+          <div class="liquid-glass liquid-card-interactive process-step-card">
+            <span class="process-step-num">PASO 04</span>
+            <h4 style="font-family:var(--font-display); font-size:1.18rem; margin-bottom:8px;">Entrega &amp; Soporte Continuo</h4>
+            <p style="font-size:0.88rem; color:var(--text-secondary);">
+              Te capacitamos paso a paso y quedamos a tu disposición con soporte técnico directo para acompañar tu crecimiento.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       PREGUNTAS FRECUENTES (FAQ INTERACTIVO)
+       ======================================================================== -->
+  <section id="faq">
+    <div class="container">
+      <div class="section-header">
+        <div class="liquid-badge">
+          <span class="pulse-dot"></span>
+          <span>RESOLVEMOS TUS DUDAS</span>
+        </div>
+        <h2 class="section-title">
+          Preguntas <span class="text-gradient-blue">Frecuentes</span>
+        </h2>
+      </div>
+
+      <div class="faq-grid">
+        <div class="liquid-glass faq-item">
+          <div class="faq-question">
+            <span>¿Por qué me conviene una base de datos a medida en vez de usar Excel o un programa enlatado?</span>
+            <span class="faq-toggle-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            Porque un programa genérico te obliga a vos a adaptarte a él, y las hojas de Excel se vuelven lentas e inseguras cuando tu negocio crece. En <strong>idealogic</strong> creamos la base de datos exactamente con las reglas, campos y reportes que tu negocio utiliza, logrando búsquedas instantáneas y cero pérdida de información.
+          </div>
+        </div>
+
+        <div class="liquid-glass faq-item">
+          <div class="faq-question">
+            <span>Si ya tengo mis datos cargados en planillas o cuadernos, ¿pueden pasarlos al sistema nuevo?</span>
+            <span class="faq-toggle-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            ¡Sí! Nos encargamos de limpiar, normalizar y migrar tus datos actuales para que arranques con tu sistema nuevo sin perder tu historial de clientes, productos o registros.
+          </div>
+        </div>
+
+        <div class="liquid-glass faq-item">
+          <div class="faq-question">
+            <span>¿Qué incluye el servicio de Soporte y Reparación Técnica de Idealogic?</span>
+            <span class="faq-toggle-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            Abarcamos tanto el mantenimiento preventivo y correctivo de tus computadoras (optimización de velocidad, limpieza de malware, diagnóstico de hardware, instalación de sistemas) como el soporte continuo y copias de seguridad de tu base de datos.
+          </div>
+        </div>
+
+        <div class="liquid-glass faq-item">
+          <div class="faq-question">
+            <span>¿Cómo empezamos a trabajar juntos?</span>
+            <span class="faq-toggle-icon">+</span>
+          </div>
+          <div class="faq-answer">
+            Podés armar tu idea en el configurador de arriba y enviarnos un mensaje directo a nuestro Instagram <strong>@idealogicsa</strong>. Coordinamos una breve entrevista de relevamiento, diseñamos el prototipo lógico y te presentamos la solución ideal.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       FOOTER & CTA FINAL DE CONVERSIÓN
+       ======================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+            <img src="assets/logo-transparent.png" alt="Idealogic" style="height:48px; width:auto;" />
+            <div>
+              <div style="font-family:var(--font-display); font-size:1.35rem; font-weight:800;">
+                <span style="color:#fff;">idea</span><span style="color:var(--brand-cyan);">logic</span>
+              </div>
+              <div style="font-family:var(--font-mono); font-size:0.65rem; color:var(--text-secondary); letter-spacing:0.15em;">
+                SERVICIO TÉCNICO INFORMÁTICO
+              </div>
+            </div>
+          </div>
+          <p style="color:var(--text-secondary); font-size:0.92rem; max-width:380px; margin-bottom:18px;">
+            “Tus ideas, fuente para una lógica eficiente”. Especialistas en creación de bases de datos personalizadas, software a medida, seguridad, reparación y soporte IT.
+          </p>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <a href="https://www.instagram.com/idealogicsa?vrfl=MXMzMms4bjhubXI5dg==" target="_blank" rel="noopener noreferrer" class="btn-liquid btn-liquid-primary btn-sm ig-dynamic-link">
+              📷 Instagram @idealogicsa
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <h4 style="font-family:var(--font-display); font-size:1.05rem; margin-bottom:14px; color:#fff;">
+            Nuestros Servicios
+          </h4>
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:8px; font-size:0.9rem; color:var(--text-secondary);">
+            <li><a href="#pilares" style="color:inherit; text-decoration:none;">🗄️ Bases de Datos Personalizadas</a></li>
+            <li><a href="#pilares" style="color:inherit; text-decoration:none;">🖥️ Soporte Técnico Informático</a></li>
+            <li><a href="#pilares" style="color:inherit; text-decoration:none;">🔧 Reparación y Optimización de PC</a></li>
+            <li><a href="#pilares" style="color:inherit; text-decoration:none;">🛡️ Seguridad y Backups Automáticos</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 style="font-family:var(--font-display); font-size:1.05rem; margin-bottom:14px; color:#fff;">
+            Contacto &amp; Institución
+          </h4>
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:8px; font-size:0.9rem; color:var(--text-secondary);">
+            <li>📱 Instagram: <strong>@idealogicsa</strong> / <strong>@idealogic_bti</strong></li>
+            <li>📍 San Lorenzo, Paraguay — C.R.E.S.R.</li>
+            <li>🎓 3ro 'A' BTI — Promoción 2026</li>
+            <li>💡 “¡Impulsá tu negocio hoy! Escribinos al DM”</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 idealogic — Sistemas &amp; Bases de Datos a tu Medida. Todos los derechos reservados.</span>
+        <span>Diseño Futurista <strong>Liquid Glass</strong> • Ingeniería &amp; Soluciones IT</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast de Notificaciones de Interacción -->
+  <div class="liquid-toast" id="liquid-toast"></div>
+
+  <!-- Scripts de la Aplicación -->
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

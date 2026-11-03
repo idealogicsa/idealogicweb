@@ -1,0 +1,1991 @@
+/* ==========================================================================
+   IDEALOGIC — LIQUID GLASS SPATIAL DESIGN SYSTEM (styles.css)
+   "Tus ideas, fuente para una lógica eficiente"
+   ========================================================================== */
+
+:root {
+  /* Paleta Final Personalizada Idealogic */
+  --bg-deep: #020613;
+  --bg-Abyss: #040b1e;
+  --bg-surface: rgba(8, 20, 48, 0.42);
+  --brand-blue: #000000;
+  --brand-blue-bright: #1d7afc;
+  --brand-cyan: #207ba2;
+  --brand-cyan-glow: rgba(32, 123, 162, 0.45);
+  --brand-emerald: #11b07b;
+  --brand-emerald-glow: rgba(17, 176, 123, 0.4);
+  --brand-slate: #64748b;
+
+  /* Parámetros de Liquid Glass */
+  --glass-blur: 30px;
+  --glass-bg: rgba(10, 25, 62, 0.34);
+  --glass-bg-strong: rgba(8, 19, 46, 0.68);
+  --glass-border-light: rgba(255, 255, 255, 0.24);
+  --glass-border-cyan: rgba(32, 123, 162, 0.32);
+  --glass-specular: rgba(255, 255, 255, 0.42);
+
+  /* Textos */
+  --text-primary: #f8fbff;
+  --text-secondary: #a5b8d8;
+  --text-muted: #6880a8;
+
+  /* Tipografías */
+  --font-display: 'Space Grotesk', 'Outfit', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Transiciones fluidas */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  selection-background-color: var(--brand-cyan);
+}
+
+::selection {
+  background: rgba(0, 180, 255, 0.32);
+  color: #ffffff;
+}
+
+body {
+  background-color: var(--bg-deep);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   FONDO INTERACTIVO: CANVAS DE CIRCUITOS + CÁUSTICAS LIQUID GLASS
+   ========================================================================== */
+#circuit-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.ambient-caustics {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.caustic-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(95px);
+  opacity: 0.42;
+  mix-blend-mode: screen;
+  animation: liquidMorph 18s ease-in-out infinite alternate;
+  will-change: transform, border-radius;
+}
+
+.caustic-orb.orb-1 {
+  width: 580px;
+  height: 580px;
+  background: radial-gradient(circle at 30% 30%, var(--brand-blue), rgba(0, 180, 255, 0.35), transparent 70%);
+  top: -12%;
+  left: -8%;
+}
+
+.caustic-orb.orb-2 {
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle at 60% 40%, var(--brand-cyan), rgba(13, 91, 217, 0.3), transparent 72%);
+  top: 28%;
+  right: -12%;
+  animation-delay: -6s;
+  animation-duration: 22s;
+}
+
+.caustic-orb.orb-3 {
+  width: 440px;
+  height: 440px;
+  background: radial-gradient(circle at 50% 50%, var(--brand-emerald), rgba(0, 180, 255, 0.25), transparent 70%);
+  bottom: 5%;
+  left: 20%;
+  opacity: 0.24;
+  animation-delay: -11s;
+  animation-duration: 25s;
+}
+
+@keyframes liquidMorph {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+  }
+  50% {
+    transform: translate3d(45px, -35px, 0) scale(1.08) rotate(12deg);
+    border-radius: 62% 38% 46% 54% / 60% 34% 66% 40%;
+  }
+  100% {
+    transform: translate3d(-30px, 40px, 0) scale(0.95) rotate(-8deg);
+    border-radius: 35% 65% 58% 42% / 48% 62% 38% 52%;
+  }
+}
+
+/* ==========================================================================
+   SISTEMA REAL "LIQUID GLASS" (REFRACCIÓN + BORDE ESPECULAR + SEGUIMIENTO)
+   ========================================================================== */
+.liquid-glass {
+  position: relative;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.11) 0%,
+    rgba(13, 91, 217, 0.14) 38%,
+    rgba(4, 12, 32, 0.56) 100%
+  );
+  backdrop-filter: blur(var(--glass-blur)) saturate(190%) contrast(104%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(190%) contrast(104%);
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.34),
+    inset 0 -1.5px 2px 0 rgba(0, 180, 255, 0.22),
+    inset 1px 0 1.5px 0 rgba(255, 255, 255, 0.12),
+    0 24px 60px -15px rgba(1, 5, 18, 0.78),
+    0 0 35px -8px rgba(13, 91, 217, 0.24);
+  transition:
+    transform 0.45s var(--ease-out-expo),
+    box-shadow 0.45s var(--ease-out-expo),
+    border-color 0.35s ease;
+  overflow: hidden;
+}
+
+/* Reflejo cáustico que sigue al cursor en cada tarjeta Liquid Glass */
+.liquid-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    520px circle at var(--mx, 50%) var(--my, 0%),
+    rgba(0, 180, 255, 0.22),
+    rgba(0, 214, 143, 0.07) 35%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Borde cromático líquido reactivo al mouse */
+.liquid-glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.4px;
+  background: radial-gradient(
+    360px circle at var(--mx, 50%) var(--my, 0%),
+    rgba(255, 255, 255, 0.75),
+    rgba(0, 180, 255, 0.65) 35%,
+    rgba(0, 214, 143, 0.45) 60%,
+    transparent 85%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.45;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.liquid-glass:hover::before {
+  opacity: 1;
+}
+
+.liquid-glass:hover::after {
+  opacity: 1;
+}
+
+.liquid-glass > * {
+  position: relative;
+  z-index: 1;
+}
+
+.liquid-card-interactive:hover {
+  transform: translateY(-6px) scale(1.008);
+  border-color: rgba(0, 180, 255, 0.38);
+  box-shadow:
+    inset 0 2px 2px 0 rgba(255, 255, 255, 0.46),
+    inset 0 -2px 3px 0 rgba(0, 214, 143, 0.28),
+    0 32px 70px -12px rgba(1, 5, 18, 0.88),
+    0 0 48px -6px rgba(0, 180, 255, 0.36);
+}
+
+/* ==========================================================================
+   LAYOUT & UTILIDADES GENERALES
+   ========================================================================== */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 2;
+}
+
+section {
+  position: relative;
+  padding: 110px 0;
+  z-index: 2;
+}
+
+.section-header {
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto 64px;
+}
+
+.liquid-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #e0f2fe;
+  background: linear-gradient(135deg, rgba(13, 91, 217, 0.32), rgba(0, 180, 255, 0.16));
+  border: 1px solid rgba(0, 180, 255, 0.38);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.35),
+    0 8px 24px -6px rgba(0, 180, 255, 0.3);
+  backdrop-filter: blur(14px);
+  margin-bottom: 20px;
+}
+
+.liquid-badge .pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--brand-emerald);
+  box-shadow: 0 0 12px var(--brand-emerald);
+  animation: pulseDot 2s infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.45); opacity: 0.65; }
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 4.2vw, 3.35rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  margin-bottom: 18px;
+}
+
+.text-gradient-blue {
+  background: linear-gradient(135deg, #ffffff 0%, #7dd3fc 42%, var(--brand-cyan) 75%, var(--brand-blue-bright) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-emerald {
+  background: linear-gradient(135deg, #6ee7b7 0%, var(--brand-emerald) 55%, var(--brand-cyan) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section-subtitle {
+  font-size: 1.12rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+/* ==========================================================================
+   NAVBAR FLOTANTE TIPO CÁPSULA LIQUID GLASS (VisionOS Style)
+   ========================================================================== */
+.navbar-wrapper {
+  position: fixed;
+  top: 18px;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  padding: 0 20px;
+  pointer-events: none;
+}
+
+.navbar-capsule {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  max-width: 1220px;
+  padding: 10px 18px 10px 22px;
+  border-radius: 999px;
+  background: linear-gradient(
+    135deg,
+    rgba(12, 29, 70, 0.62) 0%,
+    rgba(4, 12, 32, 0.78) 100%
+  );
+  backdrop-filter: blur(26px) saturate(200%);
+  -webkit-backdrop-filter: blur(26px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.36),
+    inset 0 -1px 1px rgba(0, 180, 255, 0.25),
+    0 20px 50px -10px rgba(0, 4, 15, 0.85),
+    0 0 30px -5px rgba(0, 180, 255, 0.22);
+  transition: all 0.35s var(--ease-out-expo);
+}
+
+.brand-logo-link {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.brand-id-emblem {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 12px rgba(0, 180, 255, 0.45));
+  transition: transform 0.4s var(--ease-spring);
+}
+
+.brand-logo-link:hover .brand-id-emblem {
+  transform: scale(1.08) rotate(-3deg);
+}
+
+.brand-wordmark {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.brand-wordmark-main {
+  font-family: var(--font-display);
+  font-size: 1.42rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.brand-wordmark-main .idea-part {
+  color: #ffffff;
+}
+
+.brand-wordmark-main .logic-part {
+  color: var(--brand-cyan);
+  text-shadow: 0 0 18px rgba(0, 180, 255, 0.55);
+}
+
+.brand-wordmark-line {
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--brand-emerald) 0%, var(--brand-cyan) 65%, transparent 100%);
+  margin: 3px 0;
+  border-radius: 2px;
+}
+
+.brand-wordmark-sub {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 5px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.nav-links a {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 999px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: #ffffff;
+  background: linear-gradient(135deg, rgba(13, 91, 217, 0.55), rgba(0, 180, 255, 0.3));
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.35),
+    0 4px 15px rgba(0, 180, 255, 0.28);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Botones Liquid Glass */
+.btn-liquid {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 0.94rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: all 0.35s var(--ease-out-expo);
+  overflow: hidden;
+  color: #ffffff;
+}
+
+.btn-liquid-primary {
+  background: linear-gradient(135deg, var(--brand-blue) 0%, var(--brand-cyan) 65%, #00e1ff 100%);
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  box-shadow:
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.55),
+    inset 0 -2px 4px rgba(6, 24, 68, 0.5),
+    0 12px 32px -6px rgba(0, 180, 255, 0.55),
+    0 0 20px rgba(13, 91, 217, 0.4);
+}
+
+.btn-liquid-primary:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow:
+    inset 0 2px 2px rgba(255, 255, 255, 0.7),
+    0 18px 40px -6px rgba(0, 180, 255, 0.75),
+    0 0 30px rgba(0, 214, 143, 0.45);
+}
+
+.btn-liquid-secondary {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(13, 91, 217, 0.2));
+  border: 1px solid rgba(0, 180, 255, 0.38);
+  backdrop-filter: blur(18px);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.32),
+    0 10px 28px -8px rgba(0, 8, 28, 0.7);
+}
+
+.btn-liquid-secondary:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(0, 180, 255, 0.28));
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow:
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.45),
+    0 14px 34px -6px rgba(0, 180, 255, 0.35);
+}
+
+.btn-sm {
+  padding: 9px 18px;
+  font-size: 0.84rem;
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   HERO SECTION: IMPACTO FUTURISTA LIQUID GLASS + CLUSTER 3D INTERACTIVO
+   ========================================================================== */
+.hero-section {
+  min-height: 100vh;
+  padding: 145px 0 85px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.08fr 0.92fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.hero-slogan-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 22px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(0, 214, 143, 0.14), rgba(13, 91, 217, 0.28), rgba(0, 180, 255, 0.16));
+  border: 1px solid rgba(0, 214, 143, 0.4);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.32),
+    0 0 28px -4px rgba(0, 214, 143, 0.28);
+  margin-bottom: 24px;
+  backdrop-filter: blur(16px);
+}
+
+.hero-slogan-pill span {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #e2f8f0;
+}
+
+.hero-slogan-pill .highlight-ideas {
+  color: var(--brand-emerald);
+  font-weight: 800;
+}
+
+.hero-slogan-pill .highlight-logica {
+  color: var(--brand-cyan);
+  font-weight: 800;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.65rem, 5.2vw, 4.35rem);
+  font-weight: 800;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+}
+
+.hero-lead {
+  font-size: 1.16rem;
+  color: var(--text-secondary);
+  max-width: 610px;
+  margin-bottom: 34px;
+  line-height: 1.72;
+}
+
+.hero-cta-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 42px;
+}
+
+/* Métricas flotantes en el Hero */
+.hero-metrics-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.hero-metric-card {
+  padding: 16px 18px;
+  border-radius: 20px;
+}
+
+.hero-metric-value {
+  font-family: var(--font-display);
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #ffffff;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.hero-metric-value .unit {
+  color: var(--brand-cyan);
+  font-size: 1rem;
+}
+
+.hero-metric-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   STAGE HOLOGRÁFICO 3D DEL HERO (CLUSTER DE BASES DE DATOS + VIDEO PORTAL)
+   ========================================================================== */
+.hero-visual-stage {
+  position: relative;
+  perspective: 1200px;
+}
+
+.holo-core-container {
+  padding: 26px;
+  border-radius: 32px;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.holo-top-hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hud-status-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--brand-cyan);
+}
+
+.hud-mode-tabs {
+  display: flex;
+  gap: 6px;
+  background: rgba(2, 8, 23, 0.6);
+  padding: 4px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.hud-tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.73rem;
+  font-weight: 600;
+  padding: 6px 13px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.hud-tab-btn.active {
+  background: linear-gradient(135deg, var(--brand-blue), var(--brand-cyan));
+  color: #fff;
+  box-shadow: 0 0 14px rgba(0, 180, 255, 0.45);
+}
+
+/* Escena 3D Interactiva de Servidores y Cilindros de Base de Datos */
+.iso-cluster-viewport {
+  position: relative;
+  height: 390px;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 50% 55%, rgba(13, 91, 217, 0.34), rgba(2, 8, 24, 0.85) 75%),
+    linear-gradient(180deg, rgba(0, 180, 255, 0.08) 0%, rgba(2, 6, 19, 0.9) 100%);
+  border: 1px solid rgba(0, 180, 255, 0.24);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 18px;
+}
+
+/* Grilla de piso isométrica futurista */
+.iso-floor-grid {
+  position: absolute;
+  inset: -40%;
+  background-image:
+    linear-gradient(rgba(0, 180, 255, 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 180, 255, 0.16) 1px, transparent 1px);
+  background-size: 38px 38px;
+  transform: perspective(550px) rotateX(62deg) translateY(80px) translateZ(-40px);
+  animation: gridScroll 12s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes gridScroll {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 38px; }
+}
+
+.holo-svg-scene {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 275px;
+  overflow: visible;
+}
+
+/* Animaciones de cilindros y trazas de datos en el SVG */
+.db-node-group {
+  cursor: pointer;
+  transition: transform 0.35s var(--ease-spring), filter 0.35s ease;
+}
+
+.db-node-group:hover {
+  transform: translateY(-8px);
+  filter: drop-shadow(0 0 18px rgba(0, 214, 143, 0.75));
+}
+
+.data-pulse-line {
+  stroke-dasharray: 8 10;
+  animation: dashFlow 1.6s linear infinite;
+}
+
+.cluster-turbo .data-pulse-line {
+  animation-duration: 0.38s !important;
+  stroke: #00d68f !important;
+}
+
+@keyframes dashFlow {
+  to {
+    stroke-dashoffset: -36;
+  }
+}
+
+.holo-live-telemetry {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  background: rgba(3, 10, 28, 0.76);
+  backdrop-filter: blur(14px);
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 180, 255, 0.25);
+}
+
+.telemetry-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.telemetry-label {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.telemetry-val {
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--brand-emerald);
+}
+
+/* Vista de Video Oficial dentro del Holo-Stage */
+.holo-video-viewport {
+  display: none;
+  position: relative;
+  height: 390px;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 180, 255, 0.35);
+  background: #01040d;
+}
+
+.holo-video-viewport.active {
+  display: block;
+}
+
+.iso-cluster-viewport.hidden {
+  display: none;
+}
+
+.holo-video-viewport video,
+.holo-video-viewport img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.holo-bottom-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.holo-node-status {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   LOS 4 PILARES DE IDEALOGIC (SOPORTE, REPARACIÓN, SEGURIDAD, SOLUCIONES)
+   ========================================================================== */
+.pillars-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 26px;
+}
+
+.pillar-card {
+  padding: 36px 34px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 340px;
+}
+
+.pillar-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+/* Ícono circular doble engranaje inspirado en el póster de Idealogic */
+.pillar-icon-ring {
+  width: 68px;
+  height: 68px;
+  border-radius: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(13, 91, 217, 0.38), rgba(0, 180, 255, 0.14));
+  border: 1px solid rgba(0, 180, 255, 0.48);
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.4),
+    0 0 28px rgba(0, 180, 255, 0.32);
+  color: var(--brand-cyan);
+  position: relative;
+  transition: transform 0.45s var(--ease-spring), box-shadow 0.45s ease;
+}
+
+.pillar-card:hover .pillar-icon-ring {
+  transform: scale(1.1) rotate(6deg);
+  box-shadow:
+    inset 0 2px 3px rgba(255, 255, 255, 0.6),
+    0 0 36px rgba(0, 214, 143, 0.55);
+  color: #ffffff;
+}
+
+.pillar-number {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--brand-emerald);
+  background: rgba(0, 214, 143, 0.12);
+  border: 1px solid rgba(0, 214, 143, 0.32);
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+
+.pillar-title {
+  font-family: var(--font-display);
+  font-size: 1.62rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+
+.pillar-desc {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  margin-bottom: 24px;
+}
+
+.pillar-features {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 26px;
+}
+
+.pillar-features li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  color: #dbeafe;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.pillar-features li svg {
+  color: var(--brand-emerald);
+  flex-shrink: 0;
+}
+
+.pillar-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.pillar-metric-tag {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--brand-cyan);
+}
+
+/* ==========================================================================
+   COMPARADOR DE MARKETING: CAOS DE PLANILLAS VS. LÓGICA EFICIENTE IDEALOGIC
+   ========================================================================== */
+.comparison-wrapper {
+  padding: 38px;
+  border-radius: 32px;
+}
+
+.comparison-toggle-bar {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 34px;
+  flex-wrap: wrap;
+}
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: stretch;
+}
+
+.comp-column {
+  padding: 32px;
+  border-radius: 24px;
+  transition: all 0.4s var(--ease-out-expo);
+}
+
+.comp-chaos {
+  background: linear-gradient(145deg, rgba(65, 16, 36, 0.35), rgba(15, 10, 28, 0.65));
+  border: 1px solid rgba(244, 63, 94, 0.28);
+}
+
+.comp-idealogic {
+  background: linear-gradient(145deg, rgba(13, 91, 217, 0.34), rgba(0, 214, 143, 0.14));
+  border: 1px solid rgba(0, 214, 143, 0.45);
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.35),
+    0 20px 50px -12px rgba(0, 180, 255, 0.3);
+}
+
+.comp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.comp-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.comp-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.96rem;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(2, 6, 19, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.roi-calculator-strip {
+  margin-top: 30px;
+  padding: 24px 28px;
+  border-radius: 22px;
+  background: rgba(3, 12, 34, 0.68);
+  border: 1px solid rgba(0, 180, 255, 0.28);
+  display: grid;
+  grid-template-columns: 1.2fr 1.8fr;
+  gap: 28px;
+  align-items: center;
+}
+
+.roi-slider-group label {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+}
+
+.liquid-range {
+  width: 100%;
+  accent-color: var(--brand-cyan);
+  height: 8px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+}
+
+.roi-results {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  text-align: center;
+}
+
+.roi-stat-box {
+  padding: 14px;
+  border-radius: 16px;
+  background: rgba(13, 91, 217, 0.18);
+  border: 1px solid rgba(0, 180, 255, 0.24);
+}
+
+.roi-stat-num {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: var(--brand-emerald);
+}
+
+.roi-stat-txt {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   LABORATORIO INTERACTIVO DE ARQUITECTURA DE BASES DE DATOS (SANDBOX EN VIVO)
+   ========================================================================== */
+.db-sandbox-shell {
+  padding: 34px;
+  border-radius: 32px;
+}
+
+.scenario-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 28px;
+  justify-content: center;
+}
+
+.scenario-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  background: rgba(8, 20, 48, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--text-secondary);
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s var(--ease-out-expo);
+}
+
+.scenario-btn:hover {
+  color: #fff;
+  border-color: rgba(0, 180, 255, 0.45);
+  transform: translateY(-2px);
+}
+
+.scenario-btn.active {
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--brand-blue), rgba(0, 180, 255, 0.55));
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.4),
+    0 10px 25px -5px rgba(0, 180, 255, 0.45);
+}
+
+.sandbox-workspace {
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 24px;
+}
+
+/* Diagrama Entidad-Relación (ER) Interactivo */
+.er-canvas-panel {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(13, 91, 217, 0.2), rgba(2, 6, 18, 0.85)),
+    linear-gradient(rgba(0, 180, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 180, 255, 0.06) 1px, transparent 1px);
+  background-size: 100% 100%, 24px 24px, 24px 24px;
+  border-radius: 24px;
+  border: 1px solid rgba(0, 180, 255, 0.28);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.er-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.er-tables-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  position: relative;
+}
+
+.er-table-node {
+  background: rgba(6, 16, 40, 0.82);
+  backdrop-filter: blur(16px);
+  border-radius: 16px;
+  border: 1px solid rgba(0, 180, 255, 0.3);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.er-table-node:hover,
+.er-table-node.highlighted {
+  transform: translateY(-4px) scale(1.015);
+  border-color: var(--brand-emerald);
+  box-shadow: 0 12px 30px -8px rgba(0, 214, 143, 0.38);
+}
+
+.er-table-head {
+  padding: 10px 14px;
+  background: linear-gradient(90deg, rgba(13, 91, 217, 0.45), rgba(0, 180, 255, 0.18));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.er-table-fields {
+  padding: 10px 14px;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+}
+
+.er-table-fields li {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+}
+
+.er-table-fields li:last-child {
+  border-bottom: none;
+}
+
+.pk-badge {
+  display: inline-block;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 0.64rem;
+  font-weight: 700;
+  margin-right: 6px;
+  background: rgba(0, 214, 143, 0.2);
+  color: var(--brand-emerald);
+}
+
+/* Consola SQL y Benchmark en Vivo */
+.sql-console-panel {
+  background: rgba(3, 9, 25, 0.88);
+  border-radius: 24px;
+  border: 1px solid rgba(0, 180, 255, 0.28);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sql-code-window {
+  background: rgba(1, 4, 14, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: #7dd3fc;
+  line-height: 1.55;
+  overflow-x: auto;
+  margin: 14px 0;
+  max-height: 215px;
+  white-space: pre;
+}
+
+.benchmark-meter-box {
+  background: rgba(13, 91, 217, 0.14);
+  border: 1px solid rgba(0, 180, 255, 0.22);
+  border-radius: 16px;
+  padding: 14px;
+  margin-bottom: 14px;
+}
+
+.bench-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  margin-bottom: 6px;
+}
+
+.bench-bar-track {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.bench-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--brand-blue), var(--brand-cyan), var(--brand-emerald));
+  border-radius: 99px;
+  width: 96%;
+  transition: width 0.6s var(--ease-out-expo);
+}
+
+/* ==========================================================================
+   CONFIGURADOR / COTIZADOR INTERACTIVO DE PROYECTOS A MEDIDA
+   ========================================================================== */
+.configurator-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.config-steps-card {
+  padding: 34px;
+}
+
+.config-step-block {
+  margin-bottom: 30px;
+}
+
+.config-step-block:last-child {
+  margin-bottom: 0;
+}
+
+.config-step-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.step-badge-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--brand-blue), var(--brand-cyan));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.config-options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.config-chip {
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.25s ease;
+  text-align: left;
+}
+
+.config-chip:hover {
+  border-color: rgba(0, 180, 255, 0.4);
+  color: #fff;
+  background: rgba(13, 91, 217, 0.16);
+}
+
+.config-chip.selected {
+  background: linear-gradient(135deg, rgba(13, 91, 217, 0.44), rgba(0, 214, 143, 0.2));
+  border-color: var(--brand-emerald);
+  color: #ffffff;
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.35),
+    0 8px 20px -6px rgba(0, 214, 143, 0.35);
+}
+
+.config-summary-card {
+  padding: 32px;
+  position: sticky;
+  top: 100px;
+}
+
+.summary-blueprint-list {
+  list-style: none;
+  margin: 18px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.summary-blueprint-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: #e2e8f0;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: rgba(2, 8, 23, 0.55);
+  border: 1px solid rgba(0, 180, 255, 0.18);
+}
+
+/* ==========================================================================
+   GALERÍA MULTIMEDIA OFICIAL + SELLO INSTITUCIONAL C.R.E.S.R. 3ro 'A' BTI
+   ========================================================================== */
+.showcase-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 28px;
+  align-items: stretch;
+}
+
+.showcase-media-card {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.video-frame-wrapper {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 180, 255, 0.35);
+  background: #01040d;
+  aspect-ratio: 16 / 9;
+}
+
+.video-frame-wrapper video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.flyer-frame-wrapper {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 180, 255, 0.35);
+  max-height: 440px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #020818;
+}
+
+.flyer-frame-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  max-height: 420px;
+}
+
+/* Sello Institucional C.R.E.S.R. 3ro 'A' BTI 2026 */
+.institutional-banner {
+  margin-top: 32px;
+  padding: 32px 38px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+/* ==========================================================================
+   PREGUNTAS FRECUENTES (FAQ) INTERACTIVAS
+   ========================================================================== */
+.faq-grid {
+  max-width: 880px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.faq-item {
+  border-radius: 22px;
+  padding: 22px 28px;
+  cursor: pointer;
+}
+
+.faq-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: var(--font-display);
+  font-size: 1.12rem;
+  font-weight: 700;
+}
+
+.faq-toggle-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(0, 180, 255, 0.15);
+  border: 1px solid rgba(0, 180, 255, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.35s var(--ease-spring);
+  flex-shrink: 0;
+}
+
+.faq-item.open .faq-toggle-icon {
+  transform: rotate(45deg);
+  background: var(--brand-emerald);
+  color: #020613;
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s var(--ease-out-expo), margin-top 0.3s ease;
+  color: var(--text-secondary);
+  font-size: 0.98rem;
+}
+
+.faq-item.open .faq-answer {
+  max-height: 300px;
+  margin-top: 14px;
+}
+
+/* ==========================================================================
+   FOOTER & CONTACTO DIRECTO INSTAGRAM DM
+   ========================================================================== */
+.site-footer {
+  padding: 70px 0 45px;
+  border-top: 1px solid rgba(0, 180, 255, 0.18);
+  background: linear-gradient(180deg, transparent 0%, rgba(1, 4, 14, 0.92) 100%);
+  position: relative;
+  z-index: 2;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 44px;
+}
+
+.footer-bottom {
+  padding-top: 26px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 0.86rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   SISTEMA "TODO EDITABLE AL FINAL" — IDEALOGIC LIVE STUDIO (MODO EDICIÓN)
+   ========================================================================== */
+.studio-floating-Dock {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.studio-trigger-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(8, 22, 54, 0.88), rgba(13, 91, 217, 0.55));
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 214, 143, 0.5);
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.35),
+    0 14px 35px rgba(0, 0, 0, 0.7),
+    0 0 25px rgba(0, 214, 143, 0.28);
+  transition: all 0.3s var(--ease-out-expo);
+}
+
+.studio-trigger-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  border-color: #ffffff;
+}
+
+body.edit-mode-active .studio-trigger-btn {
+  background: linear-gradient(135deg, var(--brand-emerald), #059669);
+  color: #020613;
+  border-color: #ffffff;
+  box-shadow: 0 0 30px rgba(0, 214, 143, 0.7);
+}
+
+/* Indicador visual en todos los textos editables cuando Modo Edición está activo */
+body.edit-mode-active [contenteditable="true"] {
+  outline: 1.5px dashed rgba(0, 214, 143, 0.55);
+  outline-offset: 4px;
+  border-radius: 6px;
+  cursor: text;
+  transition: outline-color 0.2s ease, background-color 0.2s ease;
+}
+
+body.edit-mode-active [contenteditable="true"]:hover {
+  outline-color: var(--brand-cyan);
+  background-color: rgba(0, 180, 255, 0.08);
+}
+
+body.edit-mode-active [contenteditable="true"]:focus {
+  outline: 2px solid var(--brand-emerald);
+  background-color: rgba(0, 214, 143, 0.12);
+}
+
+/* Panel Lateral del Editor Idealogic Studio */
+.studio-drawer {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  bottom: 16px;
+  width: 390px;
+  max-width: calc(100vw - 32px);
+  z-index: 1000;
+  background: linear-gradient(160deg, rgba(7, 18, 44, 0.94), rgba(2, 6, 18, 0.97));
+  backdrop-filter: blur(30px) saturate(200%);
+  border-radius: 28px;
+  border: 1px solid rgba(0, 180, 255, 0.42);
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.35),
+    -20px 0 60px rgba(0, 0, 0, 0.85),
+    0 0 40px rgba(0, 180, 255, 0.25);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(430px);
+  transition: transform 0.45s var(--ease-out-expo);
+  overflow-y: auto;
+}
+
+.studio-drawer.open {
+  transform: translateX(0);
+}
+
+.studio-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.studio-section {
+  margin-bottom: 22px;
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.studio-section h4 {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  color: var(--brand-cyan);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.studio-field {
+  margin-bottom: 12px;
+}
+
+.studio-field:last-child {
+  margin-bottom: 0;
+}
+
+.studio-field label {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin-bottom: 5px;
+}
+
+.studio-input {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 10px;
+  background: rgba(2, 6, 18, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 0.86rem;
+}
+
+.studio-color-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.studio-color-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+}
+
+.studio-color-item input[type="color"] {
+  width: 100%;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* Notificación Toast Liquid Glass */
+.liquid-toast {
+  position: fixed;
+  bottom: 26px;
+  right: 26px;
+  z-index: 1100;
+  padding: 14px 22px;
+  border-radius: 16px;
+  background: rgba(6, 20, 48, 0.92);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--brand-emerald);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.75), 0 0 25px rgba(0, 214, 143, 0.35);
+  transform: translateY(120px);
+  opacity: 0;
+  transition: all 0.4s var(--ease-spring);
+  pointer-events: none;
+}
+
+.liquid-toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ==========================================================================
+   DIAGNÓSTICO INTERACTIVO DE SALUD INFORMÁTICA + PIPELINE EN 4 ETAPAS
+   ========================================================================== */
+.diagnostic-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 28px;
+  align-items: stretch;
+}
+
+.symptoms-list-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.symptom-toggle-card {
+  padding: 18px 20px;
+  border-radius: 20px;
+  background: rgba(8, 20, 48, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  text-align: left;
+  transition: all 0.3s var(--ease-out-expo);
+}
+
+.symptom-toggle-card:hover {
+  border-color: rgba(0, 180, 255, 0.45);
+  transform: translateY(-3px);
+  color: #fff;
+}
+
+.symptom-toggle-card.active {
+  background: linear-gradient(135deg, rgba(244, 63, 94, 0.22), rgba(13, 91, 217, 0.32));
+  border-color: #fb7185;
+  color: #ffffff;
+  box-shadow: 0 10px 28px -8px rgba(244, 63, 94, 0.4);
+}
+
+.symptom-check {
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  margin-top: 2px;
+}
+
+.symptom-toggle-card.active .symptom-check {
+  background: #fb7185;
+  border-color: #fb7185;
+  color: #020613;
+  font-weight: 800;
+}
+
+.health-gauge-panel {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.gauge-ring-wrap {
+  position: relative;
+  width: 170px;
+  height: 170px;
+  margin: 12px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gauge-ring-svg {
+  transform: rotate(-90deg);
+  width: 170px;
+  height: 170px;
+}
+
+.gauge-ring-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 12;
+}
+
+.gauge-ring-progress {
+  fill: none;
+  stroke: var(--brand-emerald);
+  stroke-width: 12;
+  stroke-linecap: round;
+  stroke-dasharray: 440;
+  stroke-dashoffset: 60;
+  transition: stroke-dashoffset 0.6s var(--ease-out-expo), stroke 0.4s ease;
+}
+
+.gauge-center-score {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gauge-score-num {
+  font-family: var(--font-display);
+  font-size: 2.3rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.gauge-score-lbl {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* Línea de Tiempo Interactiva de 4 Pasos (Metodología Idealogic) */
+.process-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  position: relative;
+}
+
+.process-step-card {
+  padding: 28px 24px;
+  cursor: pointer;
+  position: relative;
+}
+
+.process-step-card.active-step {
+  border-color: var(--brand-emerald);
+  box-shadow:
+    inset 0 1.5px 2px rgba(255, 255, 255, 0.45),
+    0 20px 50px -10px rgba(0, 214, 143, 0.35);
+}
+
+.process-step-num {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--brand-cyan);
+  margin-bottom: 12px;
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 99px;
+  background: rgba(0, 180, 255, 0.12);
+  border: 1px solid rgba(0, 180, 255, 0.28);
+}
+
+.process-step-card.active-step .process-step-num {
+  background: rgba(0, 214, 143, 0.2);
+  border-color: var(--brand-emerald);
+  color: var(--brand-emerald);
+}
+
+/* Animación Reveal al Hacer Scroll */
+.reveal-item {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.75s var(--ease-out-expo), transform 0.75s var(--ease-out-expo);
+}
+
+.reveal-item.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Botones de agregar elementos en Modo Edición */
+.edit-only-action {
+  display: none;
+  margin: 22px auto 0;
+}
+
+body.edit-mode-active .edit-only-action {
+  display: inline-flex;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (TABLETS & MÓVILES)
+   ========================================================================== */
+@media (max-width: 1040px) {
+  .hero-grid,
+  .sandbox-workspace,
+  .configurator-grid,
+  .showcase-grid,
+  .comparison-grid,
+  .roi-calculator-strip,
+  .diagnostic-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .process-steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pillars-bento-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: inline-flex;
+  }
+
+  .nav-links.mobile-open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 72px;
+    left: 20px;
+    right: 20px;
+    background: rgba(5, 14, 36, 0.96);
+    backdrop-filter: blur(28px);
+    padding: 18px;
+    border-radius: 24px;
+    border: 1px solid rgba(0, 180, 255, 0.35);
+  }
+}
+
+@media (max-width: 640px) {
+  section {
+    padding: 75px 0;
+  }
+
+  .hero-metrics-bar,
+  .roi-results,
+  .er-tables-grid,
+  .config-options-grid,
+  .pillar-features,
+  .symptoms-list-grid,
+  .process-steps-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-title {
+    font-size: 2.35rem;
+  }
+}
